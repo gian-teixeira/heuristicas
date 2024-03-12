@@ -46,8 +46,6 @@ public:
     }
 
     void print_matrix() {
-        set<edge> printed;
-
         cout << n << ' ' << m << endl;
         for(int u = 1; u < n+1; ++u) {
             for(int v = u; v < n+1; v++) {
