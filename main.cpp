@@ -6,6 +6,8 @@
 #include <list>
 using namespace std;
 
+
+
 using edge = pair<int,int>;
 
 class graph {
@@ -14,7 +16,7 @@ public:
     vector<list<edge>> adj;
     vector<vector<int>> weight;
 
-    void read() {
+    void read(bool directed = false) {
         cin >> n >> m;
         adj.assign(n+1, list<edge>());
         weight.assign(n+1, vector<int>(n+1, INT_MAX));
@@ -23,36 +25,34 @@ public:
         for(int i = 0; i < m; ++i) {
             cin >> a >> b >> c;
             adj[a].push_back({b,c});
-            adj[b].push_back({a,c});
-            weight[a][b] = weight[b][a] = c;
+            weight[a][b] = c;
+            if(!directed) {
+                adj[b].push_back({a,c});
+                weight[b][a] = c;
+            }
         }
     }
 
     void print_list() {
-        set<edge> printed;
-
-        cout << n << ' ' << m << endl;
         for(int u = 1; u < n+1; ++u) {
+            cout << u << " : ";
             for(edge e : adj[u]) {
-                edge tmp { min(u, e.first), max(u, e.first) };
-                if(printed.find(tmp) == printed.end()) {
-                    cout << u << ' '
-                         << e.first << ' ' 
-                         << e.second << endl;
-                    printed.insert(tmp);
-                }
+                cout << "(" << e.first 
+                     << "," << e.second
+                     << ") ";
             }
+            cout << endl;
         }
     }
 
     void print_matrix() {
-        cout << n << ' ' << m << endl;
         for(int u = 1; u < n+1; ++u) {
-            for(int v = u; v < n+1; v++) {
-                if(weight[u][v] == INT_MAX) continue;
-                cout << u << ' ' << v << ' ' 
-                     << weight[u][v] << endl;
+            for(int v = 1; v < n+1; v++) {
+                if(weight[u][v] == INT_MAX) cout << "-";
+                else cout << weight[u][v];
+                cout << " ";
             }
+            cout << endl;
         }
     }
 };
