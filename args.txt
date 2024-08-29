@@ -1,0 +1,17 @@
+solver <problema> <vizinhanca> <metodo> 
+
+<problema>
+TSP
+KNAPSACK
+
+<vizinhanca>
+TSP         0   2-swap aleatorio
+            1   2-swap completo
+KNAPSACK    0   flip aleatorio
+            1   todos os flips possiveis
+
+<metodo>
+LS      *
+ILS     iteracoes
+VNS     *
+GRASP   alpha iteracoes
