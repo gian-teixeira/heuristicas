@@ -61,7 +61,11 @@ std::vector<KnapsackSolution> Knapsack::neighborhood_all_flips(KnapsackSolution 
 const {
     std::vector<KnapsackSolution> neighbors;
     for(std::size_t i = 0; i < solution.size(); ++i) {
-        neighbors.push_back(solution.flip(i));
+        KnapsackSolution tmp = solution.flip(i);
+        if(this->valid(tmp)) {
+            neighbors.push_back(tmp);
+            std::cout << this->fitness(tmp) << std::endl;
+        }
     }
     return neighbors;
 }
@@ -69,8 +73,12 @@ const {
 std::vector<KnapsackSolution> Knapsack::neighborhood_random_flip(KnapsackSolution solution)
 const {
     Random rng;
-    unsigned i = rng.randint(0, solution.size()-1);
-    return { solution.flip(i) };
+    KnapsackSolution tmp(this->size());
+    do {
+        unsigned i = rng.randint(0, solution.size()-1);
+        tmp = solution.flip(i);
+    } while(!this->valid(tmp));
+    return {tmp};
 }
 
 std::vector<Provider<KnapsackSolution,double>::neighbor_function> Knapsack::neighborhoods()

@@ -36,7 +36,7 @@ public:
             SolutionType shaked = this->shake(solution, neighborhoods[k]);
             SolutionType neighbor = ls.search(shaked, neighborhoods[k]);
             FitnessType neighbor_fitness = this->provider->fitness(neighbor);
-
+            
             if(this->provider->best(neighbor_fitness, solution_fitness)) {
                 solution_fitness = neighbor_fitness;
                 solution = neighbor;
